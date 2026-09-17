@@ -175,6 +175,10 @@
     margin-top: 4px; padding: 13px 18px; border: none; border-radius: 8px;
     background: var(--accent-grad); color: #17284f; font-size: 15px; font-weight: 900; cursor: pointer; font-family: inherit;
   }
+  .order-form-msg {
+    margin-top: 4px; padding: 12px 14px; border-radius: 8px; text-align: center;
+    background: #eef2ff; color: var(--accent-text); font-size: 13px; font-weight: 800;
+  }
 
   .sd-footer { padding: 22px 20px; text-align: center; font-size: 12px; color: #999; background: #f7f7f7; }
 
@@ -388,14 +392,10 @@
   <section class="sd-sec" id="sec-order">
     <div class="sd-sec-head"><h2>문의하기</h2></div>
     <p class="sd-sec-lead">아래 내용을 작성해 주시면 순서대로 확인 후 연락드립니다.</p>
-    <form class="order-form" onsubmit="return false;">
+    <form class="order-form" id="orderForm">
       <div class="order-field">
         <label class="order-label">닉네임 / 이름</label>
-        <input class="order-input" type="text" placeholder="닉네임을 입력해 주세요">
-      </div>
-      <div class="order-field">
-        <label class="order-label">연락처 (디스코드 / 이메일 등)</label>
-        <input class="order-input" type="text" placeholder="연락 가능한 수단을 입력해 주세요">
+        <input class="order-input" type="text" id="orderName" placeholder="닉네임을 입력해 주세요">
       </div>
       <div class="order-field">
         <label class="order-label">희망 항목</label>
@@ -419,6 +419,7 @@
         <textarea class="order-textarea" placeholder="원하는 컨셉, 레퍼런스 링크, 참고 이미지 설명 등을 자유롭게 작성해 주세요"></textarea>
       </div>
       <button class="order-action-btn" type="submit">문의 제출</button>
+      <p class="order-form-msg" id="orderFormMsg" hidden>문의가 접수되었습니다. 빠른 시일 내에 확인 후 연락드리겠습니다.</p>
     </form>
   </section>
 
@@ -536,6 +537,20 @@
 
     recalc();
   })();
+
+  // 문의 제출 (실제 접수 서버가 연결되기 전까지는 접수 확인 메시지만 표시)
+  document.getElementById('orderForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('orderName').value.trim();
+    var msg = document.getElementById('orderFormMsg');
+    if (!name) {
+      msg.textContent = '닉네임을 입력해 주세요.';
+      msg.hidden = false;
+      return;
+    }
+    msg.textContent = '문의가 접수되었습니다. 빠른 시일 내에 확인 후 연락드리겠습니다.';
+    msg.hidden = false;
+  });
 
   // 06. 참고사항 아코디언
   document.querySelectorAll('.sd-faq-q').forEach(function (btn) {
