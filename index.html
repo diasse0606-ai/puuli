@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#7A9CFF">
+<title>푸우리 작가 · 커미션 안내</title>
+<style>
+  @font-face {
+    font-family: 'Jalnan2';
+    src: url('Jalnan2TTF.ttf') format('truetype'), url('Jalnan2.otf') format('opentype');
+    font-weight: normal; font-style: normal; font-display: swap;
+  }
+  :root {
+    --accent-1: #CDE6FE;
+    --accent-2: #7A9CFF;
+    --accent-grad: linear-gradient(135deg, #CDE6FE 0%, #7A9CFF 100%);
+    --accent-solid: #6E8CE8;
+    --accent-text: #2f4fae;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jalnan2', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    background: linear-gradient(160deg, #CDE6FE 0%, #dfe9fb 45%, #7A9CFF 100%) fixed;
+    color: #111;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+
+  .page { max-width: 1200px; margin: 0 auto; background: #fff; min-height: 100vh; box-shadow: 0 0 40px rgba(0,0,0,0.12); }
+
+  /* ── 01 제목 (히어로) ───────────────────────── */
+  .sd-hero { background: var(--accent-grad); color: #17284f; padding: 40px 36px 32px; position: relative; overflow: hidden; }
+  .sd-hero-tag { display: inline-block; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; border: 1px solid rgba(23,40,79,0.3); padding: 5px 11px; margin-bottom: 14px; color: #17284f; }
+  .sd-hero h1 { font-size: 26px; font-weight: 900; letter-spacing: -0.4px; line-height: 1.35; margin: 0; color: #17284f; }
+  .sd-hero p { margin: 10px 0 0; font-size: 15px; color: #375080; line-height: 1.65; }
+  .sd-hero-btn { margin-top: 18px; display: inline-block; font-size: 14px; font-weight: 800; padding: 10px 18px; background: #17284f; color: #fff; border: none; border-radius: 20px; text-decoration: none; cursor: pointer; }
+
+  /* 슬롯 현황 */
+  .slot-badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .slot-badge {
+    width: 78px; height: 78px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; text-align: center;
+    background: #fff; border: 2px solid var(--accent-2); color: var(--accent-text);
+  }
+  .slot-badge--wait { background: var(--accent-1); border-color: var(--accent-1); color: #17284f; }
+  .slot-badge--closed { background: var(--accent-solid); border-color: var(--accent-solid); color: #fff; }
+  .slot-badge--disabled { background: #eee; border-color: #eee; color: #aaa; }
+  /* TODO: 슬롯 상태는 slot-badge(모집중) / slot-badge--wait(대기중) / slot-badge--closed(마감) / slot-badge--disabled(닫힘) 클래스로 실제 현황에 맞게 교체해 주세요 */
+
+  /* ── 공통 섹션 ───────────────────────── */
+  .sd-sec { padding: 30px 36px; border-bottom: 1px solid #eee; }
+  .sd-sec.gray { background: #f7f7f7; }
+  .sd-sec-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+  .sd-num { font-size: 18px; font-weight: 900; color: var(--accent-text); letter-spacing: 0.5px; flex-shrink: 0; }
+  .sd-sec h2 { font-size: 20px; font-weight: 900; margin: 0; letter-spacing: -0.2px; }
+  .sd-sec-lead { font-size: 14px; color: #777; line-height: 1.65; margin: 0 0 14px; }
+
+  /* ── 02 진행 방식 ───────────────────────── */
+  .sd-about-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 4px; }
+  .sd-about-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 14px 13px; font-size: 13px; color: #666; line-height: 1.55; }
+  .sd-about-card strong { display: block; font-size: 15px; color: #111; margin-bottom: 5px; }
+  .sd-sec.gray .sd-about-card { background: #fff; }
+
+  /* ── 03 포트폴리오 / 샘플 ───────────────────────── */
+  .pf-tabs { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 12px; }
+  .pf-tabs::-webkit-scrollbar { display: none; }
+  .pf-tab {
+    flex: 0 0 auto; white-space: nowrap; font-family: inherit; cursor: pointer;
+    padding: 8px 13px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    border: 1px solid #ddd; background: #fff; color: #888;
+  }
+  .pf-tab.on { color: #fff; background: var(--accent-solid); border-color: var(--accent-solid); }
+
+  .pf-slider { position: relative; }
+  .pf-slide-viewport { position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; border: 1px solid #ccc; background: linear-gradient(135deg, #ececec, #d8d8d8); }
+  .pf-slide-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+  .pf-slide { flex: 0 0 100%; width: 100%; height: 100%; }
+  .pf-slide img { width: 100%; height: 100%; object-fit: contain; background: #f2f2f2; }
+  .pf-nav-btn {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+    width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--accent-solid); color: #fff; font-size: 22px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pf-nav-btn:hover { background: var(--accent-text); }
+  .pf-nav-prev { left: 12px; }
+  .pf-nav-next { right: 12px; }
+  .pf-slide-foot { display: flex; align-items: center; justify-content: center; margin-top: 10px; }
+  .pf-counter { font-size: 14px; font-weight: 800; color: var(--accent-text); }
+  .pf-dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+  .pf-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; padding: 0; }
+  .pf-dot.on { background: var(--accent-solid); }
+
+  /* ── 이용 구분 (비상업/방송/상업) ───────────────────────── */
+  .tier-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; }
+  .tier-card { border: 1px solid #ddd; border-radius: 8px; padding: 14px; background: #fff; border-top: 3px solid var(--accent-2); }
+  .tier-card h3 { font-size: 15px; font-weight: 900; margin-bottom: 6px; color: var(--accent-text); }
+  .tier-card ul { margin: 0; padding-left: 18px; font-size: 13px; color: #666; line-height: 1.75; }
+  .tier-note { margin-top: 4px; font-size: 12px; color: #999; }
+
+  /* ── 04 견적 ───────────────────────── */
+  .sd-price-list { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+  .sd-price-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 13px 14px; background: #fff; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;
+    cursor: pointer; font-family: inherit; width: 100%; text-align: left;
+    appearance: none; -webkit-appearance: none;
+  }
+  .sd-price-row.on { border-color: var(--accent-solid); background: #eef2ff; }
+  .sd-price-row span:first-child { font-weight: 700; color: #111; }
+  .sd-price-row span:last-child { font-weight: 800; color: #111; white-space: nowrap; }
+  .price-todo { color: #c0392b; }
+  .sd-price-group-label { font-size: 13px; font-weight: 800; color: #999; margin: 14px 0 6px; }
+  .sd-price-group-label:first-child { margin-top: 0; }
+
+  .price-opt-list { display: flex; flex-direction: column; gap: 6px; }
+  .price-opt {
+    display: flex; align-items: center; gap: 8px; padding: 11px 14px;
+    background: #fff; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; cursor: pointer;
+  }
+  .price-opt:has(input:checked) { border-color: var(--accent-solid); background: #eef2ff; }
+  .price-opt input[type="radio"], .price-opt input[type="checkbox"] { accent-color: var(--accent-solid); flex-shrink: 0; }
+  .price-opt span { flex: 1; font-weight: 700; color: #111; }
+  .price-opt em { font-style: normal; font-weight: 800; color: #555; white-space: nowrap; }
+  .price-opt--stepper { justify-content: space-between; cursor: default; }
+  .qty-control { display: flex; align-items: center; gap: 6px; }
+  .qty-btn {
+    width: 26px; height: 26px; border-radius: 6px; border: 1px solid #ddd; background: #fafafa;
+    font-size: 15px; cursor: pointer; font-family: inherit; color: #555;
+  }
+  .qty-input {
+    width: 32px; text-align: center; border: none; background: transparent; font-size: 14px;
+    font-weight: 800; color: #111; font-family: inherit;
+  }
+  .sd-price-total {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin-top: 14px; padding: 13px 14px; background: var(--accent-grad); color: #17284f; border-radius: 8px; font-size: 14px;
+  }
+  .sd-price-total strong { font-size: 18px; font-weight: 900; letter-spacing: -0.2px; }
+  .sd-price-note { margin-top: 8px; font-size: 12px; color: #999; line-height: 1.6; }
+
+  /* ── 05 작업 순서 ───────────────────────── */
+  .sd-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; }
+  .sd-flow-step { font-size: 14px; font-weight: 700; padding: 9px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; }
+  .sd-flow-step.last { background: var(--accent-solid); color: #fff; border-color: var(--accent-solid); }
+  .sd-flow-arrow { color: #ccc; font-size: 14px; }
+
+  /* ── 06 참고사항 (FAQ) ───────────────────────── */
+  .sd-faq { display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
+  .sd-faq-item { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff; }
+  .sd-faq-q {
+    width: 100%; padding: 13px 14px; font-size: 14px; font-weight: 800; color: #111; background: #fafafa;
+    border: none; border-bottom: 1px solid transparent; cursor: pointer; font-family: inherit; text-align: left;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  .sd-faq-q::after { content: '+'; font-size: 16px; font-weight: 400; color: #999; line-height: 1; flex-shrink: 0; }
+  .sd-faq-item.open .sd-faq-q { border-bottom-color: #eee; }
+  .sd-faq-item.open .sd-faq-q::after { content: '−'; }
+  .sd-faq-a { display: none; padding: 12px 14px; font-size: 13px; color: #777; line-height: 1.6; }
+  .sd-faq-item.open .sd-faq-a { display: block; }
+
+  /* ── 주문 / 문의 ───────────────────────── */
+  .order-form { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+  .order-field { display: flex; flex-direction: column; gap: 6px; }
+  .order-label { font-size: 13px; font-weight: 800; color: #555; }
+  .order-input, .order-textarea, .order-select {
+    width: 100%; padding: 11px 12px; border: 1px solid #ddd; border-radius: 8px;
+    background: #fafafa; color: #111; font-family: inherit; font-size: 14px; line-height: 1.6;
+  }
+  .order-textarea { resize: vertical; min-height: 88px; }
+  .order-action-btn {
+    margin-top: 4px; padding: 13px 18px; border: none; border-radius: 8px;
+    background: var(--accent-grad); color: #17284f; font-size: 15px; font-weight: 900; cursor: pointer; font-family: inherit;
+  }
+
+  .sd-footer { padding: 22px 20px; text-align: center; font-size: 12px; color: #999; background: #f7f7f7; }
+
+  @media (max-width: 640px) {
+    .sd-hero { padding: 32px 20px 26px; }
+    .sd-sec { padding: 24px 20px; }
+    .sd-about-grid { grid-template-columns: 1fr 1fr; }
+    .pf-grid { grid-template-columns: repeat(2, 1fr); }
+    .tier-list { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 01. 제목 -->
+  <header class="sd-hero">
+    <h1>푸우리 작가</h1>
+    <p>분위기 있는 일러스트를 그립니다</p>
+    <a class="sd-hero-btn" href="#sec-order">문의하기</a>
+  </header>
+
+  <!-- 슬롯 현황: 구글 시트(A1, A2, A3 셀 = 슬롯1/2/3)의 값(1/2/3)을 읽어와 자동 표시합니다 -->
+  <section class="sd-sec" id="sec-slots">
+    <div class="slot-badge-row" id="slotBadgeRow">
+      <div class="slot-badge">모집중</div>
+      <div class="slot-badge slot-badge--wait">대기중</div>
+      <div class="slot-badge slot-badge--closed">마감</div>
+    </div>
+  </section>
+
+  <!-- 02. 진행 방식 -->
+  <section class="sd-sec" id="sec-process">
+    <div class="sd-sec-head"><span class="sd-num">02</span><h2>진행 방식</h2></div>
+    <p class="sd-sec-lead">작업물부터 진행 순서, 수정 규정까지 확인해 주세요.</p>
+    <div class="sd-about-grid">
+      <div class="sd-about-card"><strong>작업물</strong>LD 풀채색 일러스트</div>
+      <div class="sd-about-card"><strong>진행 순서</strong>문의 → 조율 → 입금 → 컬러러프 → 완성</div>
+      <div class="sd-about-card"><strong>받는 형태</strong>PNG 또는 PSD</div>
+      <div class="sd-about-card"><strong>수정</strong>컬러러프 때 2회, 완성 후 2회 무료<br>이후 1회당 +3,000원</div>
+    </div>
+  </section>
+
+  <!-- 03. 포트폴리오 / 샘플 -->
+  <section class="sd-sec" id="sec-portfolio">
+    <div class="sd-sec-head"><span class="sd-num">03</span><h2>샘플 이미지</h2></div>
+    <p class="sd-sec-lead">화살표를 눌러 샘플을 넘겨 보세요.</p>
+    <div class="pf-slider" id="pfSlider">
+      <div class="pf-slide-viewport">
+        <div class="pf-slide-track" id="pfTrack">
+          <div class="pf-slide"><img src="1.png" alt="샘플 이미지 1" loading="lazy"></div>
+          <div class="pf-slide"><img src="2.png" alt="샘플 이미지 2" loading="lazy"></div>
+          <div class="pf-slide"><img src="2026 06 18 일페_쿠모린.png" alt="샘플 이미지 3" loading="lazy"></div>
+          <div class="pf-slide"><img src="2026 07 16 마법소녀 쿠모린.png" alt="샘플 이미지 4" loading="lazy"></div>
+          <div class="pf-slide"><img src="3.png" alt="샘플 이미지 5" loading="lazy"></div>
+          <div class="pf-slide"><img src="2026 08 23.png" alt="샘플 이미지 6" loading="lazy"></div>
+          <div class="pf-slide"><img src="4.png" alt="샘플 이미지 7" loading="lazy"></div>
+          <div class="pf-slide"><img src="KakaoTalk_20260809_184837667.png" alt="샘플 이미지 8" loading="lazy"></div>
+        </div>
+        <button type="button" class="pf-nav-btn pf-nav-prev" id="pfPrev" aria-label="이전">‹</button>
+        <button type="button" class="pf-nav-btn pf-nav-next" id="pfNext" aria-label="다음">›</button>
+      </div>
+      <div class="pf-slide-foot">
+        <span class="pf-counter" id="pfCounter">1 / 8</span>
+      </div>
+      <div class="pf-dots" id="pfDots"></div>
+    </div>
+  </section>
+
+  <!-- 이용 구분: 비상업용 / 방송용 / 상업용 -->
+  <section class="sd-sec gray" id="sec-tiers">
+    <div class="sd-sec-head"><h2>이용 구분</h2></div>
+    <p class="sd-sec-lead">비상업용, 방송용, 상업용 세 가지로 구분됩니다.</p>
+    <div class="tier-list">
+      <div class="tier-card">
+        <h3>비상업용</h3>
+        <ul>
+          <li>저작권을 양도하지 않습니다.</li>
+          <li>개인 SNS에 사용 가능합니다.</li>
+          <li>방송에 사용하여 간접적인 수익을 창출하거나, 굿즈 통판 등으로 인한 직접적인 수익 창출을 금합니다.</li>
+        </ul>
+        <p class="tier-note">비상업용 예시: 방송, 유튜브, 기타 SNS 프로필 사진, 배너, 수익창출 X 커버곡 일러스트</p>
+      </div>
+      <div class="tier-card">
+        <h3>방송용</h3>
+        <ul>
+          <li>저작권을 양도하지 않습니다.</li>
+          <li>개인 SNS에 사용 가능합니다.</li>
+          <li>방송에 사용하여 간접적인 수익 창출은 가능하지만, 굿즈 통판으로 인한 직접적인 수익 창출은 금합니다.</li>
+        </ul>
+        <p class="tier-note">수익창출형 커버곡 일러스트는 방송용으로 구분합니다.</p>
+      </div>
+      <div class="tier-card">
+        <h3>상업용</h3>
+        <ul>
+          <li>저작권을 양도합니다.</li>
+          <li>개인 SNS에 사용 가능합니다.</li>
+          <li>방송에 사용하여 간접적인 수익 창출이 가능하고, 굿즈 통판으로 인한 직접적인 수익 창출도 가능합니다.</li>
+        </ul>
+        <p class="tier-note">상업용 가격은 방송용 전체 가격의 2배입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. 견적 -->
+  <section class="sd-sec gray" id="sec-price">
+    <div class="sd-sec-head"><span class="sd-num">04</span><h2>견적</h2></div>
+    <p class="sd-sec-lead">항목을 선택하면 예상 견적이 자동으로 계산됩니다.</p>
+
+    <div class="sd-price-group-label">이용 구분</div>
+    <div class="price-opt-list" data-calc-group="tier">
+      <label class="price-opt"><input type="radio" name="tier" value="nc" checked><span>비상업용</span></label>
+      <label class="price-opt"><input type="radio" name="tier" value="b"><span>방송용</span></label>
+      <label class="price-opt"><input type="radio" name="tier" value="c"><span>상업용 (방송용 가격 × 2)</span></label>
+    </div>
+
+    <div class="sd-price-group-label">캐릭터 부위</div>
+    <div class="price-opt-list" data-calc-group="part">
+      <label class="price-opt"><input type="radio" name="part" value="head" checked><span>두상</span><em data-part-price="head"></em></label>
+      <label class="price-opt"><input type="radio" name="part" value="bust"><span>흉상</span><em data-part-price="bust"></em></label>
+      <label class="price-opt"><input type="radio" name="part" value="half"><span>반신</span><em data-part-price="half"></em></label>
+      <label class="price-opt"><input type="radio" name="part" value="thigh"><span>허벅지</span><em data-part-price="thigh"></em></label>
+      <label class="price-opt"><input type="radio" name="part" value="calf"><span>종아리</span><em data-part-price="calf"></em></label>
+      <label class="price-opt"><input type="radio" name="part" value="full"><span>전신</span><em data-part-price="full"></em></label>
+    </div>
+
+    <div class="sd-price-group-label">배경</div>
+    <div class="price-opt-list" data-calc-group="bg">
+      <label class="price-opt"><input type="radio" name="bg" value="plain" checked><span>단색 / 그라데이션</span><em>0원</em></label>
+      <label class="price-opt"><input type="radio" name="bg" value="complex"><span>복잡한 배경 (최솟값)</span><em data-bg-price="complex"></em></label>
+    </div>
+
+    <div class="sd-price-group-label">추가 옵션 (전체 가격 기준 %)</div>
+    <div class="price-opt-list">
+      <label class="price-opt"><input type="checkbox" id="optPrivate"><span>샘플 비공개</span><em>+40%</em></label>
+      <label class="price-opt"><input type="checkbox" id="optRush"><span>빠른마감 (7일 이내)</span><em>+80%</em></label>
+    </div>
+
+    <div class="sd-price-group-label">추가금 · 옷 디자인</div>
+    <div class="price-opt-list" data-calc-group="clothes">
+      <label class="price-opt"><input type="radio" name="clothes" value="0" checked><span>추가 없음</span><em>0원</em></label>
+      <label class="price-opt"><input type="radio" name="clothes" value="40000"><span>옷 디자인 추가 (정면만)</span><em>+40,000원</em></label>
+      <label class="price-opt"><input type="radio" name="clothes" value="50000"><span>옷 디자인 추가 (정면+측면)</span><em>+50,000원</em></label>
+      <label class="price-opt"><input type="radio" name="clothes" value="70000"><span>옷 디자인 추가 (정면+측면+후면)</span><em>+70,000원</em></label>
+    </div>
+
+    <div class="sd-price-group-label">추가금 · 파츠 분리</div>
+    <div class="price-opt-list">
+      <label class="price-opt"><input type="checkbox" id="optPartsBase"><span>눈+입+기본 파츠 4개</span><em>+50,000원</em></label>
+      <div class="price-opt price-opt--stepper">
+        <span>추가 파츠 (개당 6,000원)</span>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" id="extraPartsQty" value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd-price-group-label">추가금 · 배경 분리</div>
+    <div class="price-opt-list" data-calc-group="bgsep">
+      <label class="price-opt"><input type="radio" name="bgsep" value="0" checked><span>추가 없음</span><em>0원</em></label>
+      <label class="price-opt"><input type="radio" name="bgsep" value="10000"><span>단색 / 그라데이션 / 단순한 배경</span><em>+10,000원</em></label>
+      <label class="price-opt"><input type="radio" name="bgsep" value="20000"><span>그 외 (상담 후 결정)</span><em>20,000원~</em></label>
+    </div>
+
+    <div class="sd-price-total">
+      <span>예상 견적</span>
+      <strong id="priceTotal">0원</strong>
+    </div>
+    <p class="sd-price-note">※ "그 외 배경 분리"는 상담 후 최종 결정되며, 위 견적에는 최소 금액(20,000원)으로 계산됩니다. 정확한 견적은 문의를 통해 확인해 주세요.</p>
+  </section>
+
+  <!-- 05. 작업 순서 -->
+  <section class="sd-sec" id="sec-flow">
+    <div class="sd-sec-head"><span class="sd-num">05</span><h2>작업 순서</h2></div>
+    <p class="sd-sec-lead">문의부터 완성까지의 흐름입니다.</p>
+    <div class="sd-flow">
+      <span class="sd-flow-step">문의</span><span class="sd-flow-arrow">→</span>
+      <span class="sd-flow-step">조율</span><span class="sd-flow-arrow">→</span>
+      <span class="sd-flow-step">입금</span><span class="sd-flow-arrow">→</span>
+      <span class="sd-flow-step">컬러러프</span><span class="sd-flow-arrow">→</span>
+      <span class="sd-flow-step last">완성</span>
+    </div>
+  </section>
+
+  <!-- 06. 참고사항 -->
+  <section class="sd-sec gray" id="sec-notes">
+    <div class="sd-sec-head"><span class="sd-num">06</span><h2>참고사항</h2></div>
+    <div class="sd-faq" data-faq>
+      <div class="sd-faq-item">
+        <button type="button" class="sd-faq-q">저작권</button>
+        <div class="sd-faq-a">방송용, 비상업용의 저작권은 작가(푸우리)에게 있습니다.</div>
+      </div>
+      <div class="sd-faq-item">
+        <button type="button" class="sd-faq-q">이용 제한</button>
+        <div class="sd-faq-a">사전 협의 없이 상업적 이용, 트레이싱, AI 학습, 원본을 훼손하는 과한 리터칭을 금합니다.</div>
+      </div>
+      <div class="sd-faq-item">
+        <button type="button" class="sd-faq-q">수정 요청</button>
+        <div class="sd-faq-a">완성 후 신청서와 다른 부분을 제외한 부분의 수정 요청은 받지 않고 있습니다.</div>
+      </div>
+      <div class="sd-faq-item">
+        <button type="button" class="sd-faq-q">샘플 사용</button>
+        <div class="sd-faq-a">모든 작품은 샘플로 사용될 수 있습니다. 원하지 않으실 경우 비공개 옵션을 선택해 주세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 주문 / 문의 -->
+  <section class="sd-sec" id="sec-order">
+    <div class="sd-sec-head"><h2>문의하기</h2></div>
+    <p class="sd-sec-lead">아래 내용을 작성해 주시면 순서대로 확인 후 연락드립니다.</p>
+    <form class="order-form" onsubmit="return false;">
+      <div class="order-field">
+        <label class="order-label">닉네임 / 이름</label>
+        <input class="order-input" type="text" placeholder="닉네임을 입력해 주세요">
+      </div>
+      <div class="order-field">
+        <label class="order-label">연락처 (디스코드 / 이메일 등)</label>
+        <input class="order-input" type="text" placeholder="연락 가능한 수단을 입력해 주세요">
+      </div>
+      <div class="order-field">
+        <label class="order-label">희망 항목</label>
+        <select class="order-select">
+          <option>비상업용 - 캐릭터</option>
+          <option>비상업용 - 배경</option>
+          <option>방송용 - 캐릭터</option>
+          <option>방송용 - 배경</option>
+          <option>상업용</option>
+        </select>
+      </div>
+      <div class="order-field">
+        <label class="order-label">비공개 여부</label>
+        <select class="order-select">
+          <option>공개 (샘플로 사용 가능)</option>
+          <option>비공개 요청</option>
+        </select>
+      </div>
+      <div class="order-field">
+        <label class="order-label">상세 요청 사항 / 레퍼런스</label>
+        <textarea class="order-textarea" placeholder="원하는 컨셉, 레퍼런스 링크, 참고 이미지 설명 등을 자유롭게 작성해 주세요"></textarea>
+      </div>
+      <button class="order-action-btn" type="submit">문의 제출</button>
+    </form>
+  </section>
+
+  <footer class="sd-footer">푸우리 작가 · 본 페이지의 가격 및 슬롯 정보는 추후 업데이트됩니다.</footer>
+
+</div>
+
+<script>
+  // 03. 샘플 이미지 슬라이더
+  (function () {
+    var track = document.getElementById('pfTrack');
+    var slides = track.querySelectorAll('.pf-slide');
+    var counter = document.getElementById('pfCounter');
+    var dotsWrap = document.getElementById('pfDots');
+    var idx = 0;
+
+    slides.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'pf-dot' + (i === 0 ? ' on' : '');
+      dot.setAttribute('aria-label', (i + 1) + '번째 이미지');
+      dot.addEventListener('click', function () { show(i); });
+      dotsWrap.appendChild(dot);
+    });
+
+    function show(next) {
+      idx = (next + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      counter.textContent = (idx + 1) + ' / ' + slides.length;
+      dotsWrap.querySelectorAll('.pf-dot').forEach(function (d, i) { d.classList.toggle('on', i === idx); });
+    }
+
+    document.getElementById('pfPrev').addEventListener('click', function () { show(idx - 1); });
+    document.getElementById('pfNext').addEventListener('click', function () { show(idx + 1); });
+
+    // 스와이프
+    var startX = null;
+    var viewport = track.parentElement;
+    viewport.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    viewport.addEventListener('touchend', function (e) {
+      if (startX === null) return;
+      var diff = e.changedTouches[0].clientX - startX;
+      if (Math.abs(diff) > 40) show(diff < 0 ? idx + 1 : idx - 1);
+      startX = null;
+    }, { passive: true });
+  })();
+
+  // 04. 견적 계산
+  (function () {
+    var PART_PRICE = {
+      nc: { head: 40000, bust: 55000, half: 60000, thigh: 70000, calf: 75000, full: 80000 },
+      b:  { head: 60000, bust: 75000, half: 80000, thigh: 90000, calf: 95000, full: 100000 }
+    };
+    var BG_COMPLEX_PRICE = { nc: 20000, b: 40000 };
+
+    function getChecked(name) {
+      var el = document.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : null;
+    }
+
+    function updatePartPriceLabels() {
+      var tier = getChecked('tier');
+      var table = tier === 'c' ? PART_PRICE.b : PART_PRICE[tier === 'b' ? 'b' : 'nc'];
+      var mult = tier === 'c' ? 2 : 1;
+      document.querySelectorAll('[data-part-price]').forEach(function (em) {
+        var key = em.getAttribute('data-part-price');
+        em.textContent = (table[key] * mult).toLocaleString('ko-KR') + '원';
+      });
+      var bgComplex = (tier === 'c' ? BG_COMPLEX_PRICE.b : BG_COMPLEX_PRICE[tier === 'b' ? 'b' : 'nc']) * mult;
+      var bgEm = document.querySelector('[data-bg-price="complex"]');
+      if (bgEm) bgEm.textContent = '+' + bgComplex.toLocaleString('ko-KR') + '원~';
+    }
+
+    function recalc() {
+      updatePartPriceLabels();
+      var tier = getChecked('tier');
+      var mult = tier === 'c' ? 2 : 1;
+      var table = tier === 'c' ? PART_PRICE.b : PART_PRICE[tier === 'b' ? 'b' : 'nc'];
+      var part = getChecked('part');
+      var base = (table[part] || 0) * mult;
+
+      var bg = getChecked('bg');
+      if (bg === 'complex') {
+        base += (tier === 'c' ? BG_COMPLEX_PRICE.b : BG_COMPLEX_PRICE[tier === 'b' ? 'b' : 'nc']) * mult;
+      }
+
+      var percent = 0;
+      if (document.getElementById('optPrivate').checked) percent += 0.4;
+      if (document.getElementById('optRush').checked) percent += 0.8;
+      var subtotal = base * (1 + percent);
+
+      var clothes = parseInt(getChecked('clothes'), 10) || 0;
+      var partsBase = document.getElementById('optPartsBase').checked ? 50000 : 0;
+      var extraPartsQty = parseInt(document.getElementById('extraPartsQty').value, 10) || 0;
+      var extraParts = extraPartsQty * 6000;
+      var bgsep = parseInt(getChecked('bgsep'), 10) || 0;
+
+      var total = Math.round(subtotal + clothes + partsBase + extraParts + bgsep);
+      document.getElementById('priceTotal').textContent = total.toLocaleString('ko-KR') + '원';
+    }
+
+    document.querySelectorAll('#sec-price input').forEach(function (input) {
+      input.addEventListener('change', recalc);
+    });
+    document.querySelector('[data-qty-up]').addEventListener('click', function () {
+      var el = document.getElementById('extraPartsQty');
+      el.value = (parseInt(el.value, 10) || 0) + 1;
+      recalc();
+    });
+    document.querySelector('[data-qty-down]').addEventListener('click', function () {
+      var el = document.getElementById('extraPartsQty');
+      el.value = Math.max(0, (parseInt(el.value, 10) || 0) - 1);
+      recalc();
+    });
+
+    recalc();
+  })();
+
+  // 06. 참고사항 아코디언
+  document.querySelectorAll('.sd-faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btn.closest('.sd-faq-item').classList.toggle('open');
+    });
+  });
+
+  // 슬롯 현황 — 구글 시트 연동 (A1, A2, A3 셀 = 슬롯1/2/3 상태값. 1=모집중, 2=대기중, 3=마감)
+  (function () {
+    var SHEET_ID = '1YE8M5-o9ZSbs-uPVO0KOg2pIqNNcqd8GS3pyVD7XTgg';
+    var SHEET_NAME = '시트1';
+    var STATUS_MAP = {
+      '1': { label: '모집중', cls: '' },
+      '2': { label: '대기중', cls: 'slot-badge--wait' },
+      '3': { label: '마감', cls: 'slot-badge--closed' }
+    };
+    var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(SHEET_NAME);
+
+    fetch(url)
+      .then(function (res) { return res.text(); })
+      .then(function (csv) {
+        // A1, A2, A3 값만 사용 (각 줄의 첫 번째 컬럼)
+        var rows = csv.trim().split('\n').slice(0, 3).map(function (line) {
+          return line.split(',')[0].replace(/"/g, '').trim();
+        });
+        var row = document.getElementById('slotBadgeRow');
+        row.innerHTML = rows.map(function (v) {
+          var s = STATUS_MAP[v] || { label: '확인 중', cls: 'slot-badge--disabled' };
+          return '<div class="slot-badge ' + s.cls + '">' + s.label + '</div>';
+        }).join('');
+      })
+      .catch(function () {
+        // 시트를 불러오지 못하면 기존 표시(모집중/대기중/마감)를 그대로 둡니다.
+      });
+  })();
+</script>
+</body>
+</html>
