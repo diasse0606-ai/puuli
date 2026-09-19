@@ -171,6 +171,7 @@
     background: #fafafa; color: #111; font-family: inherit; font-size: 14px; line-height: 1.6;
   }
   .order-textarea { resize: vertical; min-height: 88px; }
+  .order-summary-box { background: #eef2ff; color: #17284f; font-weight: 700; min-height: 60px; resize: none; }
   .order-action-btn {
     margin-top: 4px; padding: 13px 18px; border: none; border-radius: 8px;
     background: var(--accent-grad); color: #17284f; font-size: 15px; font-weight: 900; cursor: pointer; font-family: inherit;
@@ -198,7 +199,6 @@
   <header class="sd-hero">
     <h1>푸우리 작가</h1>
     <p>분위기 있는 일러스트를 그립니다</p>
-    <a class="sd-hero-btn" href="#sec-order">문의하기</a>
   </header>
 
   <!-- 슬롯 현황: 구글 시트(A1, A2, A3 셀 = 슬롯1/2/3)의 값(1/2/3)을 읽어와 자동 표시합니다 -->
@@ -295,14 +295,56 @@
       <label class="price-opt"><input type="radio" name="tier" value="c"><span>상업용 (방송용 가격 × 2)</span></label>
     </div>
 
-    <div class="sd-price-group-label">캐릭터 부위</div>
-    <div class="price-opt-list" data-calc-group="part">
-      <label class="price-opt"><input type="radio" name="part" value="head" checked><span>두상</span><em data-part-price="head"></em></label>
-      <label class="price-opt"><input type="radio" name="part" value="bust"><span>흉상</span><em data-part-price="bust"></em></label>
-      <label class="price-opt"><input type="radio" name="part" value="half"><span>반신</span><em data-part-price="half"></em></label>
-      <label class="price-opt"><input type="radio" name="part" value="thigh"><span>허벅지</span><em data-part-price="thigh"></em></label>
-      <label class="price-opt"><input type="radio" name="part" value="calf"><span>종아리</span><em data-part-price="calf"></em></label>
-      <label class="price-opt"><input type="radio" name="part" value="full"><span>전신</span><em data-part-price="full"></em></label>
+    <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택)</div>
+    <div class="price-opt-list" data-qty-group="part">
+      <div class="price-opt price-opt--stepper" data-part="head">
+        <span>두상</span><em data-part-price="head"></em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-part="bust">
+        <span>흉상</span><em data-part-price="bust"></em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-part="half">
+        <span>반신</span><em data-part-price="half"></em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-part="thigh">
+        <span>허벅지</span><em data-part-price="thigh"></em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-part="calf">
+        <span>종아리</span><em data-part-price="calf"></em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-part="full">
+        <span>전신</span><em data-part-price="full"></em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
     </div>
 
     <div class="sd-price-group-label">배경</div>
@@ -317,12 +359,32 @@
       <label class="price-opt"><input type="checkbox" id="optRush"><span>빠른마감 (7일 이내)</span><em>+80%</em></label>
     </div>
 
-    <div class="sd-price-group-label">추가금 · 옷 디자인</div>
-    <div class="price-opt-list" data-calc-group="clothes">
-      <label class="price-opt"><input type="radio" name="clothes" value="0" checked><span>추가 없음</span><em>0원</em></label>
-      <label class="price-opt"><input type="radio" name="clothes" value="40000"><span>옷 디자인 추가 (정면만)</span><em>+40,000원</em></label>
-      <label class="price-opt"><input type="radio" name="clothes" value="50000"><span>옷 디자인 추가 (정면+측면)</span><em>+50,000원</em></label>
-      <label class="price-opt"><input type="radio" name="clothes" value="70000"><span>옷 디자인 추가 (정면+측면+후면)</span><em>+70,000원</em></label>
+    <div class="sd-price-group-label">추가금 · 옷 디자인 (수량 선택)</div>
+    <div class="price-opt-list" data-qty-group="clothes">
+      <div class="price-opt price-opt--stepper" data-clothes="40000" data-clothes-label="정면만">
+        <span>옷 디자인 추가 (정면만)</span><em>40,000원</em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-clothes="50000" data-clothes-label="정면+측면">
+        <span>옷 디자인 추가 (정면+측면)</span><em>50,000원</em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
+      <div class="price-opt price-opt--stepper" data-clothes="70000" data-clothes-label="정면+측면+후면">
+        <span>옷 디자인 추가 (정면+측면+후면)</span><em>70,000원</em>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" data-qty-down>−</button>
+          <input type="text" class="qty-input" data-qty-value value="0" readonly>
+          <button type="button" class="qty-btn" data-qty-up>+</button>
+        </div>
+      </div>
     </div>
 
     <div class="sd-price-group-label">추가금 · 파츠 분리</div>
@@ -398,28 +460,23 @@
         <input class="order-input" type="text" id="orderName" placeholder="닉네임을 입력해 주세요">
       </div>
       <div class="order-field">
-        <label class="order-label">희망 항목</label>
-        <select class="order-select">
-          <option>비상업용 - 캐릭터</option>
-          <option>비상업용 - 배경</option>
-          <option>방송용 - 캐릭터</option>
-          <option>방송용 - 배경</option>
-          <option>상업용</option>
-        </select>
+        <label class="order-label">희망 항목 (04. 견적에서 선택한 내용이 자동으로 반영됩니다)</label>
+        <textarea class="order-textarea order-summary-box" id="orderSummary" readonly rows="3"></textarea>
       </div>
       <div class="order-field">
         <label class="order-label">비공개 여부</label>
-        <select class="order-select">
+        <select class="order-select" id="orderPrivacy">
           <option>공개 (샘플로 사용 가능)</option>
           <option>비공개 요청</option>
         </select>
       </div>
       <div class="order-field">
         <label class="order-label">상세 요청 사항 / 레퍼런스</label>
-        <textarea class="order-textarea" placeholder="원하는 컨셉, 레퍼런스 링크, 참고 이미지 설명 등을 자유롭게 작성해 주세요"></textarea>
+        <textarea class="order-textarea" id="orderNote" placeholder="원하는 컨셉, 레퍼런스 링크, 참고 이미지 설명 등을 자유롭게 작성해 주세요"></textarea>
       </div>
-      <button class="order-action-btn" type="submit">문의 제출</button>
-      <p class="order-form-msg" id="orderFormMsg" hidden>문의가 접수되었습니다. 빠른 시일 내에 확인 후 연락드리겠습니다.</p>
+      <button class="order-action-btn" type="button" id="orderCopyBtn">문의 내용 복사하기</button>
+      <p class="order-form-msg" id="orderFormMsg" hidden></p>
+      <p class="sd-price-note">※ 정책상 이 페이지에서 바로 문의가 전송되지 않습니다. "복사하기"를 누른 뒤, 작가 문의창에 그대로 붙여넣어 주세요.</p>
     </form>
   </section>
 
@@ -468,17 +525,34 @@
   })();
 
   // 04. 견적 계산
+  var recalcPrice; // 문의 요약에서도 사용
   (function () {
     var PART_PRICE = {
       nc: { head: 40000, bust: 55000, half: 60000, thigh: 70000, calf: 75000, full: 80000 },
       b:  { head: 60000, bust: 75000, half: 80000, thigh: 90000, calf: 95000, full: 100000 }
     };
+    var PART_LABEL = { head: '두상', bust: '흉상', half: '반신', thigh: '허벅지', calf: '종아리', full: '전신' };
     var BG_COMPLEX_PRICE = { nc: 20000, b: 40000 };
 
     function getChecked(name) {
       var el = document.querySelector('input[name="' + name + '"]:checked');
       return el ? el.value : null;
     }
+
+    // 모든 +/- 수량 버튼 공통 처리 (파츠 분리 추가수량 포함)
+    document.querySelectorAll('.qty-control').forEach(function (ctrl) {
+      var input = ctrl.querySelector('.qty-input');
+      var up = ctrl.querySelector('[data-qty-up]');
+      var down = ctrl.querySelector('[data-qty-down]');
+      up.addEventListener('click', function () {
+        input.value = (parseInt(input.value, 10) || 0) + 1;
+        recalcPrice();
+      });
+      down.addEventListener('click', function () {
+        input.value = Math.max(0, (parseInt(input.value, 10) || 0) - 1);
+        recalcPrice();
+      });
+    });
 
     function updatePartPriceLabels() {
       var tier = getChecked('tier');
@@ -493,13 +567,32 @@
       if (bgEm) bgEm.textContent = '+' + bgComplex.toLocaleString('ko-KR') + '원~';
     }
 
+    // 선택된 부위/옷디자인 수량을 문의 요약에서 재사용하기 위해 전역에 노출
+    window.getOrderSelection = function () {
+      var parts = [];
+      document.querySelectorAll('[data-qty-group="part"] [data-part]').forEach(function (row) {
+        var qty = parseInt(row.querySelector('.qty-input').value, 10) || 0;
+        if (qty > 0) parts.push(PART_LABEL[row.getAttribute('data-part')] + ' ' + qty);
+      });
+      var clothes = [];
+      document.querySelectorAll('[data-qty-group="clothes"] [data-clothes]').forEach(function (row) {
+        var qty = parseInt(row.querySelector('.qty-input').value, 10) || 0;
+        if (qty > 0) clothes.push(row.getAttribute('data-clothes-label') + ' ' + qty);
+      });
+      return { parts: parts, clothes: clothes };
+    };
+
     function recalc() {
       updatePartPriceLabels();
       var tier = getChecked('tier');
       var mult = tier === 'c' ? 2 : 1;
       var table = tier === 'c' ? PART_PRICE.b : PART_PRICE[tier === 'b' ? 'b' : 'nc'];
-      var part = getChecked('part');
-      var base = (table[part] || 0) * mult;
+
+      var base = 0;
+      document.querySelectorAll('[data-qty-group="part"] [data-part]').forEach(function (row) {
+        var qty = parseInt(row.querySelector('.qty-input').value, 10) || 0;
+        base += (table[row.getAttribute('data-part')] || 0) * mult * qty;
+      });
 
       var bg = getChecked('bg');
       if (bg === 'complex') {
@@ -511,7 +604,12 @@
       if (document.getElementById('optRush').checked) percent += 0.8;
       var subtotal = base * (1 + percent);
 
-      var clothes = parseInt(getChecked('clothes'), 10) || 0;
+      var clothes = 0;
+      document.querySelectorAll('[data-qty-group="clothes"] [data-clothes]').forEach(function (row) {
+        var qty = parseInt(row.querySelector('.qty-input').value, 10) || 0;
+        clothes += (parseInt(row.getAttribute('data-clothes'), 10) || 0) * qty;
+      });
+
       var partsBase = document.getElementById('optPartsBase').checked ? 50000 : 0;
       var extraPartsQty = parseInt(document.getElementById('extraPartsQty').value, 10) || 0;
       var extraParts = extraPartsQty * 6000;
@@ -521,26 +619,33 @@
       document.getElementById('priceTotal').textContent = total.toLocaleString('ko-KR') + '원';
     }
 
-    document.querySelectorAll('#sec-price input').forEach(function (input) {
+    document.querySelectorAll('#sec-price input[type="radio"], #sec-price input[type="checkbox"]').forEach(function (input) {
       input.addEventListener('change', recalc);
     });
-    document.querySelector('[data-qty-up]').addEventListener('click', function () {
-      var el = document.getElementById('extraPartsQty');
-      el.value = (parseInt(el.value, 10) || 0) + 1;
-      recalc();
-    });
-    document.querySelector('[data-qty-down]').addEventListener('click', function () {
-      var el = document.getElementById('extraPartsQty');
-      el.value = Math.max(0, (parseInt(el.value, 10) || 0) - 1);
-      recalc();
-    });
 
+    recalcPrice = recalc;
     recalc();
   })();
 
-  // 문의 제출 (실제 접수 서버가 연결되기 전까지는 접수 확인 메시지만 표시)
-  document.getElementById('orderForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+  // 희망 항목 요약을 04. 견적 선택값에서 자동 생성
+  function updateOrderSummary() {
+    var sel = window.getOrderSelection ? window.getOrderSelection() : { parts: [], clothes: [] };
+    var lines = [];
+    if (sel.parts.length) lines.push('캐릭터: ' + sel.parts.join(', '));
+    if (sel.clothes.length) lines.push('옷 디자인 추가: ' + sel.clothes.join(', '));
+    if (!lines.length) lines.push('(04. 견적에서 캐릭터 부위를 선택해 주세요)');
+    document.getElementById('orderSummary').value = lines.join('\n');
+  }
+  document.querySelectorAll('#sec-price .qty-input, #sec-price input[type="radio"], #sec-price input[type="checkbox"]').forEach(function (el) {
+    el.addEventListener('change', updateOrderSummary);
+  });
+  document.querySelectorAll('#sec-price [data-qty-up], #sec-price [data-qty-down]').forEach(function (btn) {
+    btn.addEventListener('click', updateOrderSummary);
+  });
+  updateOrderSummary();
+
+  // 문의 내용 복사하기 (실제 전송 없이 클립보드로 복사 → 작가 문의창에 붙여넣기)
+  document.getElementById('orderCopyBtn').addEventListener('click', function () {
     var name = document.getElementById('orderName').value.trim();
     var msg = document.getElementById('orderFormMsg');
     if (!name) {
@@ -548,8 +653,42 @@
       msg.hidden = false;
       return;
     }
-    msg.textContent = '문의가 접수되었습니다. 빠른 시일 내에 확인 후 연락드리겠습니다.';
-    msg.hidden = false;
+    var privacy = document.getElementById('orderPrivacy').value;
+    var note = document.getElementById('orderNote').value.trim();
+    var summary = document.getElementById('orderSummary').value.trim();
+    var total = document.getElementById('priceTotal').textContent;
+
+    var text = [
+      '[푸우리 작가 커미션 문의]',
+      '닉네임: ' + name,
+      '희망 항목:',
+      summary,
+      '예상 견적: ' + total,
+      '비공개 여부: ' + privacy,
+      '요청 사항: ' + (note || '(없음)')
+    ].join('\n');
+
+    function showCopied() {
+      msg.textContent = '문의 내용이 복사되었습니다. 작가 문의창에 붙여넣어 주세요.';
+      msg.hidden = false;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(showCopied).catch(function () {
+        msg.textContent = '복사에 실패했습니다. 직접 선택해 복사해 주세요.';
+        msg.hidden = false;
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showCopied(); }
+      catch (err) { msg.textContent = '복사에 실패했습니다. 직접 선택해 복사해 주세요.'; msg.hidden = false; }
+      document.body.removeChild(ta);
+    }
   });
 
   // 06. 참고사항 아코디언
