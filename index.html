@@ -229,20 +229,21 @@
     <div class="pf-slider" id="pfSlider">
       <div class="pf-slide-viewport">
         <div class="pf-slide-track" id="pfTrack">
-          <div class="pf-slide"><img src="1.png" alt="샘플 이미지 1" loading="lazy"></div>
-          <div class="pf-slide"><img src="2.png" alt="샘플 이미지 2" loading="lazy"></div>
-          <div class="pf-slide"><img src="2026 06 18 일페_쿠모린.png" alt="샘플 이미지 3" loading="lazy"></div>
-          <div class="pf-slide"><img src="2026 07 16 마법소녀 쿠모린.png" alt="샘플 이미지 4" loading="lazy"></div>
-          <div class="pf-slide"><img src="3.png" alt="샘플 이미지 5" loading="lazy"></div>
-          <div class="pf-slide"><img src="2026 08 23.png" alt="샘플 이미지 6" loading="lazy"></div>
-          <div class="pf-slide"><img src="4.png" alt="샘플 이미지 7" loading="lazy"></div>
-          <div class="pf-slide"><img src="KakaoTalk_20260809_184837667.png" alt="샘플 이미지 8" loading="lazy"></div>
+          <div class="pf-slide"><img src="9.png" alt="샘플 이미지 1" loading="lazy"></div>
+          <div class="pf-slide"><img src="1.png" alt="샘플 이미지 2" loading="lazy"></div>
+          <div class="pf-slide"><img src="2.png" alt="샘플 이미지 3" loading="lazy"></div>
+          <div class="pf-slide"><img src="2026 06 18 일페_쿠모린.png" alt="샘플 이미지 4" loading="lazy"></div>
+          <div class="pf-slide"><img src="2026 07 16 마법소녀 쿠모린.png" alt="샘플 이미지 5" loading="lazy"></div>
+          <div class="pf-slide"><img src="3.png" alt="샘플 이미지 6" loading="lazy"></div>
+          <div class="pf-slide"><img src="2026 08 23.png" alt="샘플 이미지 7" loading="lazy"></div>
+          <div class="pf-slide"><img src="4.png" alt="샘플 이미지 8" loading="lazy"></div>
+          <div class="pf-slide"><img src="KakaoTalk_20260809_184837667.png" alt="샘플 이미지 9" loading="lazy"></div>
         </div>
         <button type="button" class="pf-nav-btn pf-nav-prev" id="pfPrev" aria-label="이전">‹</button>
         <button type="button" class="pf-nav-btn pf-nav-next" id="pfNext" aria-label="다음">›</button>
       </div>
       <div class="pf-slide-foot">
-        <span class="pf-counter" id="pfCounter">1 / 8</span>
+        <span class="pf-counter" id="pfCounter">1 / 9</span>
       </div>
       <div class="pf-dots" id="pfDots"></div>
     </div>
@@ -522,6 +523,9 @@
       if (Math.abs(diff) > 40) show(diff < 0 ? idx + 1 : idx - 1);
       startX = null;
     }, { passive: true });
+
+    // 초기 상태를 슬라이드 개수에 맞춰 동기화
+    show(0);
   })();
 
   // 04. 견적 계산
