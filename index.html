@@ -277,7 +277,7 @@
           <li>개인 SNS에 사용 가능합니다.</li>
           <li>방송에 사용하여 간접적인 수익을 창출하거나, 굿즈 통판 등으로 인한 직접적인 수익 창출을 금합니다.</li>
         </ul>
-        <p class="tier-note">비상업용 예시: 방송, 유튜브, 기타 SNS 프로필 사진, 배너, 수익창출 X 커버곡 일러스트</p>
+        <p class="tier-note">비상업용 예시: 유튜브·SNS 프로필 사진, 배너, 수익창출 X 커버곡 일러스트</p>
       </div>
       <div class="tier-card">
         <h3>방송용</h3>
@@ -286,7 +286,7 @@
           <li>개인 SNS에 사용 가능합니다.</li>
           <li>방송에 사용하여 간접적인 수익 창출은 가능하지만, 굿즈 통판으로 인한 직접적인 수익 창출은 금합니다.</li>
         </ul>
-        <p class="tier-note">수익창출형 커버곡 일러스트는 방송용으로 구분합니다.</p>
+        <p class="tier-note">수익창출형 커버곡 일러스트와 방송 대기화면(수익화 여부 무관)은 방송용으로 구분합니다.</p>
       </div>
       <div class="tier-card">
         <h3>상업용</h3>
@@ -312,11 +312,11 @@
       <label class="price-opt"><input type="radio" name="tier" value="c"><span>상업용 (방송용 가격 × 2)</span></label>
     </div>
 
-    <div class="sd-price-group-label">커버곡 세트 (비상업용·방송용 · 캐릭터 1인 + 연출 배경 + 16:9 구도 · 추가 인원 75%)</div>
+    <div class="sd-price-group-label">커버곡·대기화면 세트 (캐릭터 1인 + 연출 배경 + 16:9 구도 · 추가 인원 75%)</div>
     <div class="price-opt-list" data-calc-group="set">
       <label class="price-opt"><input type="radio" name="set" value="none" checked><span>선택 안 함</span><em>0원</em></label>
-      <label class="price-opt"><input type="radio" name="set" value="half"><span>커버곡 세트 · 반신</span><em data-set-price="half"></em></label>
-      <label class="price-opt"><input type="radio" name="set" value="full"><span>커버곡 세트 · 전신</span><em data-set-price="full"></em></label>
+      <label class="price-opt"><input type="radio" name="set" value="half"><span data-set-label="half">커버곡·대기화면 세트 · 반신</span><em data-set-price="half"></em></label>
+      <label class="price-opt"><input type="radio" name="set" value="full"><span data-set-label="full">커버곡·대기화면 세트 · 전신</span><em data-set-price="full"></em></label>
     </div>
 
     <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택)</div>
@@ -563,7 +563,11 @@
     var BG_COMPLEX_PRICE = { nc: 20000, b: 40000 };
     // 커버곡 세트: 캐릭터 1인 + 연출 배경 (상업용은 방송용 × 2)
     var SET_PRICE = { nc: { half: 75000, full: 90000 }, b: { half: 110000, full: 130000 } };
-    var SET_LABEL = { half: '커버곡 세트 · 반신', full: '커버곡 세트 · 전신' };
+    var PART_NAME = { half: '반신', full: '전신' };
+    // 비상업용은 커버곡 전용, 방송용은 커버곡·대기화면
+    function setLabel(key, tier) {
+      return tier === 'nc' ? '커버곡 세트 · ' + PART_NAME[key] + ' (커버곡 전용)' : '커버곡·대기화면 세트 · ' + PART_NAME[key];
+    }
 
     function getChecked(name) {
       var el = document.querySelector('input[name="' + name + '"]:checked');
@@ -605,6 +609,9 @@
       document.querySelectorAll('[data-set-price]').forEach(function (em) {
         em.textContent = setLocked ? '상업용 제외' : (setTable[em.getAttribute('data-set-price')] * mult).toLocaleString('ko-KR') + '원';
       });
+      document.querySelectorAll('[data-set-label]').forEach(function (span) {
+        span.textContent = setLabel(span.getAttribute('data-set-label'), tier);
+      });
       var bgEm = document.querySelector('[data-bg-price="complex"]');
       if (bgEm) bgEm.textContent = '+' + bgComplex.toLocaleString('ko-KR') + '원~';
     }
@@ -622,7 +629,7 @@
         if (qty > 0) clothes.push(row.getAttribute('data-clothes-label') + ' ' + qty);
       });
       var set = getChecked('set');
-      return { set: set && set !== 'none' ? SET_LABEL[set] : '', parts: parts, clothes: clothes };
+      return { set: set && set !== 'none' ? setLabel(set, getChecked('tier')) : '', parts: parts, clothes: clothes };
     };
 
     function recalc() {
