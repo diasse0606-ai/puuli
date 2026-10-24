@@ -138,6 +138,7 @@
     display: flex; align-items: center; gap: 8px; padding: 11px 14px;
     background: #fff; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; cursor: pointer;
   }
+  .price-opt:has(input:disabled) { opacity: 0.45; cursor: not-allowed; }
   .price-opt:has(input:checked) { border-color: var(--accent-solid); background: #eef2ff; }
   .price-opt input[type="radio"], .price-opt input[type="checkbox"] { accent-color: var(--accent-solid); flex-shrink: 0; }
   .price-opt span { flex: 1; font-weight: 700; color: #111; }
@@ -311,7 +312,7 @@
       <label class="price-opt"><input type="radio" name="tier" value="c"><span>상업용 (방송용 가격 × 2)</span></label>
     </div>
 
-    <div class="sd-price-group-label">커버곡 세트 (캐릭터 1인 + 연출 배경 + 16:9 구도 · 추가 인원 75%)</div>
+    <div class="sd-price-group-label">커버곡 세트 (비상업용·방송용 · 캐릭터 1인 + 연출 배경 + 16:9 구도 · 추가 인원 75%)</div>
     <div class="price-opt-list" data-calc-group="set">
       <label class="price-opt"><input type="radio" name="set" value="none" checked><span>선택 안 함</span><em>0원</em></label>
       <label class="price-opt"><input type="radio" name="set" value="half"><span>커버곡 세트 · 반신</span><em data-set-price="half"></em></label>
@@ -594,8 +595,15 @@
       });
       var bgComplex = (tier === 'c' ? BG_COMPLEX_PRICE.b : BG_COMPLEX_PRICE[tier === 'b' ? 'b' : 'nc']) * mult;
       var setTable = tier === 'c' ? SET_PRICE.b : SET_PRICE[tier === 'b' ? 'b' : 'nc'];
+      // 커버곡 세트는 비상업용·방송용만 (상업용은 일반 주문으로 문의)
+      var setLocked = tier === 'c';
+      document.querySelectorAll('input[name="set"]').forEach(function (input) {
+        if (input.value === 'none') return;
+        input.disabled = setLocked;
+        if (setLocked && input.checked) document.querySelector('input[name="set"][value="none"]').checked = true;
+      });
       document.querySelectorAll('[data-set-price]').forEach(function (em) {
-        em.textContent = (setTable[em.getAttribute('data-set-price')] * mult).toLocaleString('ko-KR') + '원';
+        em.textContent = setLocked ? '상업용 제외' : (setTable[em.getAttribute('data-set-price')] * mult).toLocaleString('ko-KR') + '원';
       });
       var bgEm = document.querySelector('[data-bg-price="complex"]');
       if (bgEm) bgEm.textContent = '+' + bgComplex.toLocaleString('ko-KR') + '원~';
