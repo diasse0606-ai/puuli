@@ -312,14 +312,14 @@
       <label class="price-opt"><input type="radio" name="tier" value="c"><span>상업용 (방송용 가격 × 2)</span></label>
     </div>
 
-    <div class="sd-price-group-label">커버곡 세트 (캐릭터 1인 + 분위기 배경 + 16:9 구도)</div>
+    <div class="sd-price-group-label">커버곡 세트 (캐릭터 1인 + 분위기 배경 + 16:9 구도 · 추가 인원 75%)</div>
     <div class="price-opt-list" data-calc-group="set">
       <label class="price-opt"><input type="radio" name="set" value="none" checked><span>선택 안 함</span><em>0원</em></label>
       <label class="price-opt"><input type="radio" name="set" value="half"><span>커버곡 세트 · 반신</span><em data-set-price="half"></em></label>
       <label class="price-opt"><input type="radio" name="set" value="full"><span>커버곡 세트 · 전신</span><em data-set-price="full"></em></label>
     </div>
 
-    <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택 · 2인부터 추가 인원 75%)</div>
+    <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택)</div>
     <div class="price-opt-list" data-qty-group="part">
       <div class="price-opt price-opt--stepper" data-part="head">
         <span>두상</span><em data-part-price="head"></em>
@@ -624,7 +624,7 @@
       var mult = tier === 'c' ? 2 : 1;
       var table = tier === 'c' ? PART_PRICE.b : PART_PRICE[tier === 'b' ? 'b' : 'nc'];
 
-      // 인원별 캐릭터 가격: 가장 비싼 1인은 100%, 추가 인원은 75%
+      // 인원별 캐릭터 가격 (추가 인원 75% 할인은 커버곡 세트에만 적용)
       var people = [];
       document.querySelectorAll('[data-qty-group="part"] [data-part]').forEach(function (row) {
         var qty = parseInt(row.querySelector('.qty-input').value, 10) || 0;
@@ -640,7 +640,8 @@
         people.forEach(function (price) { base += price * 0.75; });
         people.unshift(0);
       } else {
-        people.forEach(function (price, n) { base += n === 0 ? price : price * 0.75; });
+        // 커버곡 세트가 아니면 인원별 정가
+        people.forEach(function (price) { base += price; });
       }
       var groupNote = document.getElementById('groupNote');
       if (groupNote) groupNote.hidden = people.length < 4;
