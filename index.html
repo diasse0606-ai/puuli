@@ -564,9 +564,8 @@
     // 커버곡 세트: 캐릭터 1인 + 연출 배경 (상업용은 방송용 × 2)
     var SET_PRICE = { nc: { half: 75000, full: 90000 }, b: { half: 110000, full: 130000 } };
     var PART_NAME = { half: '반신', full: '전신' };
-    // 대기화면은 방송용이라 비상업용은 커버곡만
     function setLabel(key, tier) {
-      return '커버곡·대기화면 세트 · ' + PART_NAME[key] + (tier === 'nc' ? ' (비상업용은 커버곡만)' : '');
+      return '커버곡·대기화면 세트 · ' + PART_NAME[key];
     }
 
     function getChecked(name) {
