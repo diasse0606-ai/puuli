@@ -686,7 +686,7 @@
     if (sel.set) lines.push(sel.set);
     if (sel.parts.length) lines.push((sel.set ? '추가 인원: ' : '캐릭터: ') + sel.parts.join(', '));
     if (sel.clothes.length) lines.push('옷 디자인 추가: ' + sel.clothes.join(', '));
-    if (!lines.length) lines.push('(04. 견적에서 커버곡 세트나 캐릭터 부위를 선택해 주세요)');
+    if (!lines.length) lines.push('(04. 견적에서 캐릭터 부위를 선택해 주세요)');
     document.getElementById('orderSummary').value = lines.join('\n');
   }
   document.querySelectorAll('#sec-price .qty-input, #sec-price input[type="radio"], #sec-price input[type="checkbox"]').forEach(function (el) {
