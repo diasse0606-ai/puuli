@@ -315,8 +315,8 @@
     <div class="sd-price-group-label">커버곡·대기화면 세트 (캐릭터 1인 + 연출 배경 + 16:9 구도 · 추가 인원 75%)</div>
     <div class="price-opt-list" data-calc-group="set">
       <label class="price-opt"><input type="radio" name="set" value="none" checked><span>선택 안 함</span><em>0원</em></label>
-      <label class="price-opt"><input type="radio" name="set" value="half"><span data-set-label="half">커버곡·대기화면 세트 · 반신</span><em data-set-price="half"></em></label>
-      <label class="price-opt"><input type="radio" name="set" value="full"><span data-set-label="full">커버곡·대기화면 세트 · 전신</span><em data-set-price="full"></em></label>
+      <label class="price-opt"><input type="radio" name="set" value="half"><span data-set-label="half">반신 세트</span><em data-set-price="half"></em></label>
+      <label class="price-opt"><input type="radio" name="set" value="full"><span data-set-label="full">전신 세트</span><em data-set-price="full"></em></label>
     </div>
 
     <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택)</div>
@@ -609,8 +609,10 @@
       document.querySelectorAll('[data-set-price]').forEach(function (em) {
         em.textContent = setLocked ? '상업용 제외' : (setTable[em.getAttribute('data-set-price')] * mult).toLocaleString('ko-KR') + '원';
       });
+      // 선택지는 짧게 (세트 이름은 칸 제목에 있음)
       document.querySelectorAll('[data-set-label]').forEach(function (span) {
-        span.textContent = setLabel(span.getAttribute('data-set-label'), tier);
+        var key = span.getAttribute('data-set-label');
+        span.textContent = PART_NAME[key] + ' 세트' + (tier === 'nc' ? ' (커버곡 전용)' : '');
       });
       var bgEm = document.querySelector('[data-bg-price="complex"]');
       if (bgEm) bgEm.textContent = '+' + bgComplex.toLocaleString('ko-KR') + '원~';
