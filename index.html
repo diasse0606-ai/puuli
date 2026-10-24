@@ -312,7 +312,7 @@
       <label class="price-opt"><input type="radio" name="tier" value="c"><span>상업용 (방송용 가격 × 2)</span></label>
     </div>
 
-    <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택)</div>
+    <div class="sd-price-group-label">캐릭터 부위 (부위별 수량 선택 · 2인부터 추가 인원 75%)</div>
     <div class="price-opt-list" data-qty-group="part">
       <div class="price-opt price-opt--stepper" data-part="head">
         <span>두상</span><em data-part-price="head"></em>
@@ -406,7 +406,7 @@
 
     <div class="sd-price-group-label">추가금 · 커버곡용 파츠 분리</div>
     <div class="price-opt-list">
-      <label class="price-opt"><input type="checkbox" id="optPartsBase"><span>눈+입+기본 파츠 4개</span><em>+30,000원</em></label>
+      <label class="price-opt"><input type="checkbox" id="optPartsBase"><span>눈+입+기본 파츠 4개 (추가 인원 1명당 +20,000원)</span><em>+30,000원</em></label>
       <div class="price-opt price-opt--stepper">
         <span>추가 파츠 (개당 5,000원)</span>
         <div class="qty-control">
@@ -428,6 +428,7 @@
       <span>예상 견적</span>
       <strong id="priceTotal">0원</strong>
     </div>
+    <p class="sd-price-note" id="groupNote" hidden>※ 4인 이상은 구도에 따라 가격이 달라져 문의 후 확정됩니다.</p>
     <p class="sd-price-note">※ "그 외 배경 분리"는 상담 후 최종 결정되며, 위 견적에는 최소 금액(20,000원)으로 계산됩니다. 정확한 견적은 문의를 통해 확인해 주세요.</p>
   </section>
 
@@ -608,11 +609,17 @@
       var mult = tier === 'c' ? 2 : 1;
       var table = tier === 'c' ? PART_PRICE.b : PART_PRICE[tier === 'b' ? 'b' : 'nc'];
 
-      var base = 0;
+      // 인원별 캐릭터 가격: 가장 비싼 1인은 100%, 추가 인원은 75%
+      var people = [];
       document.querySelectorAll('[data-qty-group="part"] [data-part]').forEach(function (row) {
         var qty = parseInt(row.querySelector('.qty-input').value, 10) || 0;
-        base += (table[row.getAttribute('data-part')] || 0) * mult * qty;
+        for (var n = 0; n < qty; n++) people.push((table[row.getAttribute('data-part')] || 0) * mult);
       });
+      people.sort(function (a, b) { return b - a; });
+      var base = 0;
+      people.forEach(function (price, n) { base += n === 0 ? price : price * 0.75; });
+      var groupNote = document.getElementById('groupNote');
+      if (groupNote) groupNote.hidden = people.length < 4;
 
       var bg = getChecked('bg');
       if (bg === 'complex') {
@@ -630,7 +637,7 @@
         clothes += (parseInt(row.getAttribute('data-clothes'), 10) || 0) * qty;
       });
 
-      var partsBase = document.getElementById('optPartsBase').checked ? 30000 : 0;
+      var partsBase = document.getElementById('optPartsBase').checked ? 30000 + 20000 * Math.max(0, people.length - 1) : 0;
       var extraPartsQty = parseInt(document.getElementById('extraPartsQty').value, 10) || 0;
       var extraParts = extraPartsQty * 5000;
       var bgsep = parseInt(getChecked('bgsep'), 10) || 0;
