@@ -396,9 +396,9 @@
 
     <div class="sd-price-group-label">추가금 · 커버곡용 파츠 분리</div>
     <div class="price-opt-list">
-      <label class="price-opt"><input type="checkbox" id="optPartsBase"><span>눈+입+기본 파츠 4개</span><em>+50,000원</em></label>
+      <label class="price-opt"><input type="checkbox" id="optPartsBase"><span>눈+입+기본 파츠 4개</span><em>+30,000원</em></label>
       <div class="price-opt price-opt--stepper">
-        <span>추가 파츠 (개당 6,000원)</span>
+        <span>추가 파츠 (개당 5,000원)</span>
         <div class="qty-control">
           <button type="button" class="qty-btn" data-qty-down>−</button>
           <input type="text" class="qty-input" id="extraPartsQty" value="0" readonly>
@@ -620,9 +620,9 @@
         clothes += (parseInt(row.getAttribute('data-clothes'), 10) || 0) * qty;
       });
 
-      var partsBase = document.getElementById('optPartsBase').checked ? 50000 : 0;
+      var partsBase = document.getElementById('optPartsBase').checked ? 30000 : 0;
       var extraPartsQty = parseInt(document.getElementById('extraPartsQty').value, 10) || 0;
-      var extraParts = extraPartsQty * 6000;
+      var extraParts = extraPartsQty * 5000;
       var bgsep = parseInt(getChecked('bgsep'), 10) || 0;
 
       var total = Math.round(subtotal + clothes + partsBase + extraParts + bgsep);
