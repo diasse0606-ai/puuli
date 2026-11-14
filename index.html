@@ -695,12 +695,37 @@
   // 희망 항목 요약을 04. 견적 선택값에서 자동 생성
   function updateOrderSummary() {
     var sel = window.getOrderSelection ? window.getOrderSelection() : { parts: [], clothes: [] };
+    function checkedText(name) {
+      var input = document.querySelector('#sec-price input[name="' + name + '"]:checked');
+      return input ? input.parentNode.querySelector('span').textContent.trim() : '';
+    }
     var lines = [];
-    if (sel.set) lines.push(sel.set);
-    if (sel.parts.length) lines.push((sel.set ? '추가 인원: ' : '캐릭터: ') + sel.parts.join(', '));
-    if (sel.clothes.length) lines.push('옷 디자인 추가: ' + sel.clothes.join(', '));
-    if (!lines.length) lines.push('(04. 견적에서 캐릭터 부위를 선택해 주세요)');
-    document.getElementById('orderSummary').value = lines.join('\n');
+    if (!sel.set && !sel.parts.length) {
+      lines.push('(04. 견적에서 캐릭터 부위를 선택해 주세요)');
+    } else {
+      lines.push('이용 구분: ' + checkedText('tier').replace(/\s*\(.*\)$/, ''));
+      if (sel.set) lines.push(sel.set);
+      if (sel.parts.length) lines.push((sel.set ? '추가 인원: ' : '캐릭터: ') + sel.parts.join(', '));
+      if (!sel.set) lines.push('배경: ' + checkedText('bg').replace(/\s*\(최솟값\)$/, ''));
+      if (sel.clothes.length) lines.push('옷 디자인 추가: ' + sel.clothes.join(', '));
+      var partsBase = document.getElementById('optPartsBase').checked;
+      var extraParts = parseInt(document.getElementById('extraPartsQty').value, 10) || 0;
+      if (partsBase || extraParts) {
+        var p = [];
+        if (partsBase) p.push('기본 (눈+입+파츠 4개)');
+        if (extraParts) p.push('추가 파츠 ' + extraParts + '개');
+        lines.push('커버곡용 파츠 분리: ' + p.join(', '));
+      }
+      var bgsep = document.querySelector('#sec-price input[name="bgsep"]:checked');
+      if (bgsep && bgsep.value !== '0') lines.push('배경 분리: ' + checkedText('bgsep'));
+      var extra = [];
+      if (document.getElementById('optPrivate').checked) extra.push('샘플 비공개');
+      if (document.getElementById('optRush').checked) extra.push('빠른마감 (7일 이내)');
+      if (extra.length) lines.push('추가 옵션: ' + extra.join(', '));
+    }
+    var box = document.getElementById('orderSummary');
+    box.value = lines.join('\n');
+    box.rows = Math.max(3, lines.length);
   }
   document.querySelectorAll('#sec-price .qty-input, #sec-price input[type="radio"], #sec-price input[type="checkbox"]').forEach(function (el) {
     el.addEventListener('change', updateOrderSummary);
