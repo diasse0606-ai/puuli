@@ -189,6 +189,11 @@
     background: #fafafa; color: #111; font-family: inherit; font-size: 15px; line-height: 1.6;
   }
   .order-textarea { resize: vertical; min-height: 88px; }
+  .order-input, .order-select { height: 48px; }
+  .order-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .order-row > .order-field { min-width: 0; }
+  .order-req { color: var(--accent-text); margin-left: 2px; }
+  @media (max-width: 640px) { .order-row { grid-template-columns: 1fr; } }
   .order-summary-box { background: #eef2ff; color: #17284f; font-weight: 700; min-height: 60px; resize: none; }
   .order-action-btn {
     margin-top: 4px; padding: 13px 18px; border: none; border-radius: 8px;
@@ -481,23 +486,38 @@
     <p class="sd-sec-lead">아래 내용을 작성해 주시면 순서대로 확인 후 연락드립니다.</p>
     <form class="order-form" id="orderForm">
       <div class="order-field">
-        <label class="order-label">닉네임 / 이름</label>
+        <label class="order-label" for="orderName">닉네임 / 이름<span class="order-req">*</span></label>
         <input class="order-input" type="text" id="orderName" placeholder="닉네임을 입력해 주세요">
       </div>
+      <div class="order-row">
+        <div class="order-field">
+          <label class="order-label" for="orderUse">사용 용도</label>
+          <input class="order-input" type="text" id="orderUse" placeholder="예: 개인 소장, 방송 대기화면, 굿즈 통판 등">
+        </div>
+        <div class="order-field">
+          <label class="order-label" for="orderDue">희망 마감일</label>
+          <input class="order-input" type="text" id="orderDue" placeholder="예: 12월 20일까지">
+        </div>
+      </div>
       <div class="order-field">
-        <label class="order-label">희망 항목 (04. 견적에서 선택한 내용이 자동으로 반영됩니다)</label>
+        <label class="order-label" for="orderSummary">희망 항목 (04. 견적에서 선택한 내용이 자동으로 반영됩니다)</label>
         <textarea class="order-textarea order-summary-box" id="orderSummary" readonly rows="3"></textarea>
       </div>
       <div class="order-field">
-        <label class="order-label">비공개 여부</label>
-        <select class="order-select" id="orderPrivacy">
-          <option>공개 (샘플로 사용 가능)</option>
-          <option>비공개 요청</option>
-        </select>
+        <label class="order-label" for="orderChar">캐릭터 설명</label>
+        <textarea class="order-textarea" id="orderChar"></textarea>
       </div>
       <div class="order-field">
-        <label class="order-label">상세 요청 사항 / 레퍼런스</label>
-        <textarea class="order-textarea" id="orderNote" placeholder="원하는 컨셉, 레퍼런스 링크, 참고 이미지 설명 등을 자유롭게 작성해 주세요"></textarea>
+        <label class="order-label" for="orderPose">원하는 구도 · 표정</label>
+        <textarea class="order-textarea" id="orderPose" placeholder="오마카세 가능."></textarea>
+      </div>
+      <div class="order-field">
+        <label class="order-label" for="orderRef">참고 자료</label>
+        <textarea class="order-textarea" id="orderRef" placeholder="복사 후 문의하기에서 이미지 첨부 부탁드립니다."></textarea>
+      </div>
+      <div class="order-field">
+        <label class="order-label" for="orderNote">기타 요청 사항</label>
+        <textarea class="order-textarea" id="orderNote" placeholder="꼭 필요한 요소 등을 자유롭게 적어주세요."></textarea>
       </div>
       <button class="order-action-btn" type="button" id="orderCopyBtn">문의 내용 복사하기</button>
       <p class="order-form-msg" id="orderFormMsg" hidden></p>
@@ -744,19 +764,29 @@
       msg.hidden = false;
       return;
     }
-    var privacy = document.getElementById('orderPrivacy').value;
     var note = document.getElementById('orderNote').value.trim();
+    var use = document.getElementById('orderUse').value.trim();
+    var due = document.getElementById('orderDue').value.trim();
+    var chr = document.getElementById('orderChar').value.trim();
+    var pose = document.getElementById('orderPose').value.trim();
+    var ref = document.getElementById('orderRef').value.trim();
     var summary = document.getElementById('orderSummary').value.trim();
     var total = document.getElementById('priceTotal').textContent;
 
     var text = [
       '[푸우리 작가 커미션 문의]',
       '닉네임: ' + name,
+      '사용 용도: ' + (use || '(미기재)'),
+      '희망 마감일: ' + (due || '(미기재)'),
+      '',
       '희망 항목:',
       summary,
       '예상 견적: ' + total,
-      '비공개 여부: ' + privacy,
-      '요청 사항: ' + (note || '(없음)')
+      '',
+      '캐릭터 설명: ' + (chr || '(없음)'),
+      '원하는 구도 · 표정: ' + (pose || '(없음)'),
+      '참고 자료: ' + (ref || '(없음)'),
+      '기타 요청 사항: ' + (note || '(없음)')
     ].join('\n');
 
     function showCopied() {
